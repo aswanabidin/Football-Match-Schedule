@@ -1,7 +1,10 @@
 package aswanabidin.footballmatchschedule.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class MatchEventModel (
 
     @SerializedName("idEvent")
@@ -156,4 +159,4 @@ data class MatchEventModel (
 
     @SerializedName("strLocked")
     var strLocked: String
-)
+) : Parcelable

@@ -8,13 +8,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitInstance {
 
     companion object {
-        fun getClient() : RetrofitInstance {
-            val retrofit = Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.API_KEY}")
+        fun getClient(): Retrofit {
+            return Retrofit.Builder()
+                .baseUrl(BuildConfig.BASE_URL +
+                        "api/v1/json/${BuildConfig.API_KEY}")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
-            return retrofit.create(RetrofitInstance::class.java)
         }
     }
 }

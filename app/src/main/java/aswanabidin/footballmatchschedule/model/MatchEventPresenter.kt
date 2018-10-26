@@ -3,7 +3,8 @@ package aswanabidin.footballmatchschedule.model
 import aswanabidin.footballmatchschedule.network.IRestTheSportDB
 import io.reactivex.Flowable
 
-class MatchEvent(private val iRestTheSportDB: IRestTheSportDB) {
+
+class MatchEventPresenter(private val iRestTheSportDB: IRestTheSportDB) {
 
     fun getLastMatch(id: String): Flowable<MatchEventResponse> = iRestTheSportDB.getLastMatch(id)
 

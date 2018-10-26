@@ -2,14 +2,14 @@ package aswanabidin.footballmatchschedule.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import aswanabidin.footballmatchschedule.R
-import aswanabidin.footballmatchschedule.model.MatchEvent
+import aswanabidin.footballmatchschedule.model.MatchEventModel
+import kotlinx.android.synthetic.main.card_match_item.view.*
 
-class TeamsAdapter(private val matchEventList: List<MatchEvent>, val context: Context?) :
+class TeamsAdapter(val matchEventList: List<MatchEventModel>, val context: Context?) :
     RecyclerView.Adapter<TeamsAdapter.TeamsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, view: Int): TeamsViewHolder {
@@ -20,13 +20,21 @@ class TeamsAdapter(private val matchEventList: List<MatchEvent>, val context: Co
 
 
     override fun onBindViewHolder(holder: TeamsViewHolder, position: Int) {
-        holder
+        holder.bindItem(matchEventList[position])
     }
 
 
     inner class TeamsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindItem(matchEvent: MatchEvent){
+        fun bindItem(matchEvent: MatchEventModel){
+
+            itemView.dateMatch.text = matchEvent.dateEvent
+            itemView.tvHomeName.text = matchEvent.strHomeTeam
+            itemView.tvHomeScore.text = matchEvent.intHomeScore
+            itemView.tvAwayName.text = matchEvent.strAwayTeam
+            itemView.tvAwayScore.text = matchEvent.intAwayScore
+            itemView.setOnClickListener {
+            }
         }
 
     }
