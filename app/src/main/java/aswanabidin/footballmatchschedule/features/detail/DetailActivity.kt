@@ -48,30 +48,31 @@ class DetailActivity : AppCompatActivity(), DetailContracts.View {
     }
 
     private fun Data(matchEvent: MatchEventModel) {
+
         if (matchEvent.intHomeScore == null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                match_date.setTextColor(applicationContext.getColor(R.color.colorAccent))
+                matchDate.setTextColor(applicationContext.getColor(R.color.colorAccent))
             }
         }
 
-        match_date.text = matchEvent.dateEvent
-        home_score_match.text = matchEvent.intHomeScore
-        away_score_match.text = matchEvent.intAwayScore
+        matchDate.text = matchEvent.dateEvent
+        homeScoreMatch.text = matchEvent.intHomeScore
+        awayScoreMatch.text = matchEvent.intAwayScore
 
-        home_goalkeeper.text = matchEvent.strHomeLineupGoalkeeper
-        away_goalkeeper.text = matchEvent.strAwayLineupGoalkeeper
+        homeGoalKeeper.text = matchEvent.strHomeLineupGoalkeeper
+        awayGoalKeeper.text = matchEvent.strAwayLineupGoalkeeper
 
-        home_defense.text = matchEvent.strHomeLineupDefense
-        away_defense.text = matchEvent.strAwayLineupDefense
+        homeDefense.text = matchEvent.strHomeLineupDefense
+        awayDefense.text = matchEvent.strAwayLineupDefense
 
-        home_midfield.text = matchEvent.strHomeLineupMidfield
-        away_midfield.text = matchEvent.strAwayLineupMidfield
+        homeMidField.text = matchEvent.strHomeLineupMidfield
+        awayMidField.text = matchEvent.strAwayLineupMidfield
 
-        home_forward.text = matchEvent.strHomeLineupForward
-        away_forward.text = matchEvent.strAwayLineupForward
+        homeForward.text = matchEvent.strHomeLineupForward
+        awayForward.text = matchEvent.strAwayLineupForward
 
-        home_substitutes.text = matchEvent.strHomeLineupSubstitutes
-        away_substitutes.text = matchEvent.strAwayLineupSubstitutes
+        homeSubtitutes.text = matchEvent.strHomeLineupSubstitutes
+        awaySubtitutes.text = matchEvent.strAwayLineupSubstitutes
 
     }
 
@@ -80,7 +81,7 @@ class DetailActivity : AppCompatActivity(), DetailContracts.View {
             .load(team.strTeamBadge)
             .placeholder(R.drawable.ic_launcher_background)
             .error(R.drawable.ic_launcher_background)
-            .into(img_home)
+            .into(imgHome)
     }
 
     override fun displayTeamBadgeAway(team: TeamsModel) {
@@ -88,7 +89,7 @@ class DetailActivity : AppCompatActivity(), DetailContracts.View {
             .load(team.strTeamBadge)
             .placeholder(R.drawable.ic_launcher_background)
             .error(R.drawable.ic_launcher_background)
-            .into(img_away)
+            .into(imgAway)
     }
 
 
