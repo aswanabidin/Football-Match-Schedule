@@ -1,4 +1,4 @@
-package aswanabidin.footballmatchschedule.features
+package aswanabidin.footballmatchschedule
 
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import aswanabidin.footballmatchschedule.R
 import aswanabidin.footballmatchschedule.features.fragments.LastMatchFragment
 import aswanabidin.footballmatchschedule.features.fragments.NextMatchFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -18,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val fragmentAdapter = MyPagerAdapter (supportFragmentManager)
+        val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
         viewpager_main.adapter = fragmentAdapter
 
         tabs_main.setupWithViewPager(viewpager_main)

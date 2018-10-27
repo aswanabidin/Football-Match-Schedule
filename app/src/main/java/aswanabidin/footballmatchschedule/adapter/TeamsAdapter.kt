@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import aswanabidin.footballmatchschedule.R
+import aswanabidin.footballmatchschedule.features.detail.DetailActivity
 import aswanabidin.footballmatchschedule.model.MatchEventModel
 import kotlinx.android.synthetic.main.card_match_item.view.*
+import org.jetbrains.anko.startActivity
 
-class TeamsAdapter(val matchEventList: List<MatchEventModel>, val context: Context?) :
+
+class TeamsAdapter(private val matchEventList: List<MatchEventModel>, val context: Context?) :
     RecyclerView.Adapter<TeamsAdapter.TeamsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, view: Int): TeamsViewHolder {
@@ -26,16 +29,18 @@ class TeamsAdapter(val matchEventList: List<MatchEventModel>, val context: Conte
 
     inner class TeamsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindItem(matchEvent: MatchEventModel){
+        fun bindItem(matchEvent: MatchEventModel) {
 
             itemView.dateMatch.text = matchEvent.dateEvent
             itemView.tvHomeName.text = matchEvent.strHomeTeam
             itemView.tvHomeScore.text = matchEvent.intHomeScore
             itemView.tvAwayName.text = matchEvent.strAwayTeam
             itemView.tvAwayScore.text = matchEvent.intAwayScore
+
             itemView.setOnClickListener {
+                itemView.context.startActivity<DetailActivity>("match" to matchEvent)
+
             }
         }
-
     }
 }
