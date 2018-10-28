@@ -1,18 +1,19 @@
 package aswanabidin.footballmatchschedule.features.detail
 
-import android.annotation.SuppressLint
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.CalendarContract
-import android.support.v4.graphics.ColorUtils
+import android.support.v4.content.ContextCompat
 import android.view.Menu
+import android.view.MenuItem
 import aswanabidin.footballmatchschedule.R
-import aswanabidin.footballmatchschedule.model.MatchEventModel
-import aswanabidin.footballmatchschedule.model.MatchEventPresenter
-import aswanabidin.footballmatchschedule.model.TeamsModel
+import aswanabidin.footballmatchschedule.R.menu
+import aswanabidin.footballmatchschedule.R.menu.item_menu
+import aswanabidin.footballmatchschedule.constants.FavoriteConstants
+import aswanabidin.footballmatchschedule.database.database
+import aswanabidin.footballmatchschedule.model.database.DatabasePresenter
+import aswanabidin.footballmatchschedule.model.match.MatchEventModel
+import aswanabidin.footballmatchschedule.model.match.MatchEventPresenter
+import aswanabidin.footballmatchschedule.model.teams.TeamsModel
 import aswanabidin.footballmatchschedule.network.IRestTheSportDB
 import aswanabidin.footballmatchschedule.network.RetrofitInstance
 import com.squareup.picasso.Picasso
@@ -20,9 +21,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_detail.*
+import org.jetbrains.anko.toast
 
 class DetailActivity : AppCompatActivity(), DetailContracts.View {
 
+    private var menuItem: Menu? = null
+    private var isFavorite: Boolean = false
     private lateinit var matchEvent: MatchEventModel
     private lateinit var mPresenter: DetailPresenter
 
@@ -38,22 +42,18 @@ class DetailActivity : AppCompatActivity(), DetailContracts.View {
 
         val service = RetrofitInstance.getClient().create(IRestTheSportDB::class.java)
         val request = MatchEventPresenter(service)
-        mPresenter = DetailPresenter(this, request)
+        val database = DatabasePresenter(applicationContext)
+        mPresenter = DetailPresenter(this, request, database)
 
         matchEvent = intent.getParcelableExtra<MatchEventModel>("match")
         mPresenter.getTeamsBadgeAway(matchEvent.idAwayTeam)
         mPresenter.getTeamsBadgeHome(matchEvent.idHomeTeam)
-        Data(matchEvent)
+        data(matchEvent)
         supportActionBar?.title = matchEvent.strEvent
     }
 
-    private fun Data(matchEvent: MatchEventModel) {
+    private fun data(matchEvent: MatchEventModel) {
 
-        if (matchEvent.intHomeScore == null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                matchDate.setTextColor(applicationContext.getColor(R.color.colorAccent))
-            }
-        }
 
         matchDate.text = matchEvent.dateEvent
         homeScoreMatch.text = matchEvent.intHomeScore
@@ -76,6 +76,43 @@ class DetailActivity : AppCompatActivity(), DetailContracts.View {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(item_menu, menu)
+        menuItem = menu
+        setFavorite()
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            R.id.add_to_favorite -> {
+                if (!isFavorite){
+                    mPresenter.insertMatch(
+                        matchEvent.idEvent.toString(), matchEvent.idHomeTeam, matchEvent.idAwayTeam)
+                    toast("added match to favorite")
+                    isFavorite = !isFavorite
+                }else{
+                    mPresenter.deleteMatch(matchEvent.idEvent.toString())
+                    toast("Remove match from favorite")
+                    isFavorite = !isFavorite
+                }
+                setFavorite()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun setFavorite() {
+        if (isFavorite)
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_fill_favorites)
+        else
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_no_fill_favorites)
+    }
+
     override fun displayTeamBadgeHome(team: TeamsModel) {
         Picasso.get()
             .load(team.strTeamBadge)
@@ -92,33 +129,10 @@ class DetailActivity : AppCompatActivity(), DetailContracts.View {
             .into(imgAway)
     }
 
-
-    class DetailPresenter(
-        private val mView: DetailContracts.View,
-        private val matchEventPresenter: MatchEventPresenter
-    ) {
-        private val compositeDisposable = CompositeDisposable()
-        fun getTeamsBadgeHome(id: String) {
-            compositeDisposable.add(matchEventPresenter.getTeam(id)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe {
-                    mView.displayTeamBadgeHome(it.teams[0])
-                })
-        }
-
-        fun getTeamsBadgeAway(id: String) {
-            compositeDisposable.add(matchEventPresenter.getTeam(
-                id
-            )
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe {
-                    mView.displayTeamBadgeAway(it.teams[0])
-                })
-        }
-
-
+    override fun setFavoriteState(favList: List<FavoriteConstants>) {
+        if(!favList.isEmpty()) isFavorite = true
     }
+
+
 
 }

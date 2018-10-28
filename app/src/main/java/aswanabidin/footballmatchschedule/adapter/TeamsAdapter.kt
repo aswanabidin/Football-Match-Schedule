@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import aswanabidin.footballmatchschedule.R
 import aswanabidin.footballmatchschedule.features.detail.DetailActivity
-import aswanabidin.footballmatchschedule.model.MatchEventModel
+import aswanabidin.footballmatchschedule.model.match.MatchEventModel
 import kotlinx.android.synthetic.main.card_match_item.view.*
 import org.jetbrains.anko.startActivity
 
@@ -16,7 +16,7 @@ class TeamsAdapter(private val matchEventList: List<MatchEventModel>, val contex
     RecyclerView.Adapter<TeamsAdapter.TeamsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, view: Int): TeamsViewHolder {
-        return TeamsViewHolder(LayoutInflater.from(context).inflate(R.layout.card_match_item, parent, false));
+        return TeamsViewHolder(LayoutInflater.from(context).inflate(R.layout.card_match_item, parent, false))
     }
 
     override fun getItemCount(): Int = matchEventList.size

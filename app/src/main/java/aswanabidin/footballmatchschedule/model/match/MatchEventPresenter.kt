@@ -1,5 +1,6 @@
-package aswanabidin.footballmatchschedule.model
+package aswanabidin.footballmatchschedule.model.match
 
+import aswanabidin.footballmatchschedule.model.teams.TeamsResponse
 import aswanabidin.footballmatchschedule.network.IRestTheSportDB
 import io.reactivex.Flowable
 

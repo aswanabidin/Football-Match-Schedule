@@ -1,4 +1,4 @@
-package aswanabidin.footballmatchschedule.features.fragments
+package aswanabidin.footballmatchschedule.features.match.next
 
 
 import android.os.Bundle
@@ -9,20 +9,21 @@ import android.view.View
 import android.view.ViewGroup
 import aswanabidin.footballmatchschedule.R
 import aswanabidin.footballmatchschedule.adapter.TeamsAdapter
-import aswanabidin.footballmatchschedule.model.MatchEventModel
-import aswanabidin.footballmatchschedule.model.MatchEventPresenter
+import aswanabidin.footballmatchschedule.features.match.MatchFragmentContracts
+import aswanabidin.footballmatchschedule.model.match.MatchEventModel
+import aswanabidin.footballmatchschedule.model.match.MatchEventPresenter
 import aswanabidin.footballmatchschedule.network.IRestTheSportDB
 import aswanabidin.footballmatchschedule.network.RetrofitInstance
 import aswanabidin.footballmatchschedule.utils.hide
 import aswanabidin.footballmatchschedule.utils.show
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_next_match.*
 
 
-class NextMatchFragment : Fragment(), MatchFragmentContracts.NextMatchFragmentView {
+class NextMatchFragment : Fragment(),
+    MatchFragmentContracts.NextMatchFragmentView {
 
     private lateinit var mPresenter: MatchFragmentContracts.NextMatchFragmentPresenter
 
@@ -39,8 +40,13 @@ class NextMatchFragment : Fragment(), MatchFragmentContracts.NextMatchFragmentVi
         super.onActivityCreated(savedInstanceState)
         val service = RetrofitInstance.getClient().create(IRestTheSportDB::class.java)
         val request = MatchEventPresenter(service)
-        val schedulerProvider = NextMatchFragment.AppSchedulerProvider()
-        mPresenter = NextMatchPresenter(this, request, schedulerProvider)
+        val schedulerProvider =
+            AppSchedulerProvider()
+        mPresenter = NextMatchPresenter(
+            this,
+            request,
+            schedulerProvider
+        )
 
         mPresenter.getFootballNextMatch()
 
@@ -65,27 +71,9 @@ class NextMatchFragment : Fragment(), MatchFragmentContracts.NextMatchFragmentVi
         rvNextMatch.adapter = TeamsAdapter(matchList, context)
     }
 
-    class NextMatchPresenter(
-        private val matchView: MatchFragmentContracts.NextMatchFragmentView,
-        private val matchEventPresenter: MatchEventPresenter,
-        private val scheduler: NextMatchFragment.SchedulerProvider
-    ) : MatchFragmentContracts.NextMatchFragmentPresenter {
 
-        private val compositeDisposable = CompositeDisposable()
-
-        override fun getFootballNextMatch() {
-            matchView.showProgress()
-            compositeDisposable.add(matchEventPresenter.getNextMatch("4332")
-                .observeOn(scheduler.view())
-                .subscribeOn(scheduler.result())
-                .subscribe {
-                    matchView.displayFootballMatch(it.events)
-                    matchView.hideProgress()
-                })
-        }
-    }
-
-    class AppSchedulerProvider : SchedulerProvider {
+    class AppSchedulerProvider :
+        SchedulerProvider {
         override fun view() = AndroidSchedulers.mainThread()
         override fun result() = Schedulers.io()
     }

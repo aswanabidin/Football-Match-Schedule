@@ -1,6 +1,6 @@
-package aswanabidin.footballmatchschedule.features.fragments
+package aswanabidin.footballmatchschedule.features.match
 
-import aswanabidin.footballmatchschedule.model.MatchEventModel
+import aswanabidin.footballmatchschedule.model.match.MatchEventModel
 
 class MatchFragmentContracts {
 

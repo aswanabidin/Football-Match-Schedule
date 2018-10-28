@@ -1,4 +1,4 @@
-package aswanabidin.footballmatchschedule.features.fragments
+package aswanabidin.footballmatchschedule.features.match.last
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,8 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import aswanabidin.footballmatchschedule.R
 import aswanabidin.footballmatchschedule.adapter.TeamsAdapter
-import aswanabidin.footballmatchschedule.model.MatchEventModel
-import aswanabidin.footballmatchschedule.model.MatchEventPresenter
+import aswanabidin.footballmatchschedule.features.match.MatchFragmentContracts
+import aswanabidin.footballmatchschedule.model.match.MatchEventModel
+import aswanabidin.footballmatchschedule.model.match.MatchEventPresenter
 import aswanabidin.footballmatchschedule.network.IRestTheSportDB
 import aswanabidin.footballmatchschedule.network.RetrofitInstance
 import aswanabidin.footballmatchschedule.utils.hide
@@ -20,7 +21,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_last_match.*
 
-class LastMatchFragment : Fragment(), MatchFragmentContracts.LastMatchFragmentView {
+class LastMatchFragment : Fragment(),
+    MatchFragmentContracts.LastMatchFragmentView {
 
     private lateinit var mPresenter: LastMatchPresenter
 
@@ -37,8 +39,13 @@ class LastMatchFragment : Fragment(), MatchFragmentContracts.LastMatchFragmentVi
         super.onActivityCreated(savedInstanceState)
         val service = RetrofitInstance.getClient().create(IRestTheSportDB::class.java)
         val request = MatchEventPresenter(service)
-        val schedulerProvider = AppSchedulerProvider()
-        mPresenter = LastMatchPresenter(this, request, schedulerProvider)
+        val schedulerProvider =
+            AppSchedulerProvider()
+        mPresenter = LastMatchPresenter(
+            this,
+            request,
+            schedulerProvider
+        )
         mPresenter.getFootballLastMatch()
 
     }
@@ -62,27 +69,9 @@ class LastMatchFragment : Fragment(), MatchFragmentContracts.LastMatchFragmentVi
         rvLastMatch.adapter = TeamsAdapter(matchList, context)
     }
 
-    class LastMatchPresenter(
-        private val matchView: MatchFragmentContracts.LastMatchFragmentView,
-        private val matchEventPresenter: MatchEventPresenter,
-        private val scheduler: SchedulerProvider
-    ) : MatchFragmentContracts.LastMatchFragmentPresenter {
 
-        private val compositeDisposable = CompositeDisposable()
-
-        override fun getFootballLastMatch() {
-            matchView.showProgress()
-            compositeDisposable.add(matchEventPresenter.getLastMatch("4332")
-                .observeOn(scheduler.view())
-                .subscribeOn(scheduler.result())
-                .subscribe {
-                    matchView.displayFootballMatch(it.events)
-                    matchView.hideProgress()
-                })
-        }
-    }
-
-    class AppSchedulerProvider : SchedulerProvider {
+    class AppSchedulerProvider :
+        SchedulerProvider {
         override fun view() = AndroidSchedulers.mainThread()
         override fun result() = Schedulers.io()
     }

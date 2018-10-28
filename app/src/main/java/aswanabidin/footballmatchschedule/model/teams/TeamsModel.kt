@@ -1,4 +1,4 @@
-package aswanabidin.footballmatchschedule.model
+package aswanabidin.footballmatchschedule.model.teams
 
 import com.google.gson.annotations.SerializedName
 

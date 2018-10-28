@@ -1,7 +1,7 @@
 package aswanabidin.footballmatchschedule.network
 
-import aswanabidin.footballmatchschedule.model.MatchEventResponse
-import aswanabidin.footballmatchschedule.model.TeamsResponse
+import aswanabidin.footballmatchschedule.model.match.MatchEventResponse
+import aswanabidin.footballmatchschedule.model.teams.TeamsResponse
 import io.reactivex.Flowable
 import retrofit2.http.GET
 import retrofit2.http.Query
