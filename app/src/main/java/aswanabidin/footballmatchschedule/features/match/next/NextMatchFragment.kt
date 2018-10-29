@@ -14,11 +14,9 @@ import aswanabidin.footballmatchschedule.model.match.MatchEventModel
 import aswanabidin.footballmatchschedule.model.match.MatchEventPresenter
 import aswanabidin.footballmatchschedule.network.IRestTheSportDB
 import aswanabidin.footballmatchschedule.network.RetrofitInstance
+import aswanabidin.footballmatchschedule.utils.AppSchedule
 import aswanabidin.footballmatchschedule.utils.hide
 import aswanabidin.footballmatchschedule.utils.show
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_next_match.*
 
 
@@ -41,7 +39,7 @@ class NextMatchFragment : Fragment(),
         val service = RetrofitInstance.getClient().create(IRestTheSportDB::class.java)
         val request = MatchEventPresenter(service)
         val schedulerProvider =
-            AppSchedulerProvider()
+            AppSchedule()
         mPresenter = NextMatchPresenter(
             this,
             request,
@@ -71,17 +69,5 @@ class NextMatchFragment : Fragment(),
         rvNextMatch.adapter = TeamsAdapter(matchList, context)
     }
 
-
-    class AppSchedulerProvider :
-        SchedulerProvider {
-        override fun view() = AndroidSchedulers.mainThread()
-        override fun result() = Schedulers.io()
-    }
-
-
-    interface SchedulerProvider {
-        fun view(): Scheduler
-        fun result(): Scheduler
-    }
 
 }

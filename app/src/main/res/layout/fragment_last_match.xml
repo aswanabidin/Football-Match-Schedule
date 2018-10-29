@@ -14,6 +14,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/card_match_item"/>
+
         <ProgressBar
                 android:id="@+id/progressLastMatch"
                 android:layout_width="50dp"

@@ -2,13 +2,13 @@ package aswanabidin.footballmatchschedule.features.match.next
 
 import aswanabidin.footballmatchschedule.features.match.MatchFragmentContracts
 import aswanabidin.footballmatchschedule.model.match.MatchEventPresenter
+import aswanabidin.footballmatchschedule.utils.IAppSchedule
 import io.reactivex.disposables.CompositeDisposable
 
 class NextMatchPresenter(
     private val matchView: MatchFragmentContracts.NextMatchFragmentView,
     private val matchEventPresenter: MatchEventPresenter,
-    private val scheduler: NextMatchFragment.SchedulerProvider
-) : MatchFragmentContracts.NextMatchFragmentPresenter {
+    private val scheduler: IAppSchedule.View) : MatchFragmentContracts.NextMatchFragmentPresenter {
 
     private val compositeDisposable = CompositeDisposable()
 

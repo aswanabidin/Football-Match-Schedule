@@ -8,28 +8,28 @@ import kotlinx.android.parcel.Parcelize
 data class MatchEventModel (
 
     @SerializedName("idEvent")
-    var idEvent: String,
+    var idEvent: String?,
 
     @SerializedName("idSoccerXML")
-    var idSoccerXML: String,
+    var idSoccerXML: String?,
 
     @SerializedName("strEvent")
-    var strEvent: String,
+    var strEvent: String? = null ,
 
     @SerializedName("strFilename")
-    var strFilename: String,
+    var strFilename: String?,
 
     @SerializedName("strSport")
-    var strSport: String,
+    var strSport: String? = null,
 
     @SerializedName("idLeague")
-    var idLeague: String,
+    var idLeague: String? = null,
 
     @SerializedName("strLeague")
-    var strLeague: String,
+    var strLeague: String? = null,
 
     @SerializedName("strSeason")
-    var strSeason: String,
+    var strSeason: String? = null,
 
     @SerializedName("strDescriptionEN")
     var strDescriptionEN: String? = null,

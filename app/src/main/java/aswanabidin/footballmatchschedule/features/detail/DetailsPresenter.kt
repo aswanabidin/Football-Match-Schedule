@@ -8,9 +8,10 @@ import io.reactivex.schedulers.Schedulers
 
 class DetailPresenter(private val mView: DetailContracts.View,
                       private val matchEventPresenter: MatchEventPresenter,
-                      private val repositoryPresenter: DatabasePresenter) : DetailContracts.Presenter {
+                      private val databasePresenter: DatabasePresenter) : DetailContracts.Presenter {
 
     private val compositeDisposable = CompositeDisposable()
+
     override fun getTeamsBadgeHome(id: String) {
         compositeDisposable.add(matchEventPresenter.getTeam(id)
             .observeOn(AndroidSchedulers.mainThread())
@@ -30,14 +31,14 @@ class DetailPresenter(private val mView: DetailContracts.View,
     }
 
     override fun deleteMatch(id: String) {
-        repositoryPresenter.deleteMatchData(id)
+        databasePresenter.deleteMatchData(id)
     }
 
     override fun checkMatch(id: String) {
-        mView.setFavoriteState(repositoryPresenter.checkFavorite(id))
+        mView.setFavoriteState(databasePresenter.checkFavorite(id))
     }
 
     override fun insertMatch(eventId: String, homeId: String, awayId: String) {
-        repositoryPresenter.insertMatchData(eventId, homeId, awayId)
+        databasePresenter.insertMatchData(eventId, homeId, awayId)
     }
 }

@@ -26,12 +26,6 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <android.support.design.widget.TabLayout
-                android:id="@+id/tabs_main"
-                android:background="@color/colorPrimary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
     </android.support.design.widget.AppBarLayout>
 
 
@@ -40,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom_layout"
+            android:layout_below="@+id/appbarLayout"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 
@@ -50,13 +45,17 @@
             android:layout_alignParentBottom="true"
             android:orientation="vertical">
 
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@drawable/shadow_bottom_navigation"/>
+
         <android.support.design.widget.BottomNavigationView
                 android:id="@+id/bottom_navigation"
                 android:layout_width="match_parent"
+                android:focusable="true"
                 android:layout_height="wrap_content"
                 app:itemBackground="@android:color/white"
-                app:itemIconTint="@color/colorAccent"
-                app:itemTextColor="@color/colorAccent"
                 app:menu="@menu/bottom_navigation_menu"/>
 
     </LinearLayout>

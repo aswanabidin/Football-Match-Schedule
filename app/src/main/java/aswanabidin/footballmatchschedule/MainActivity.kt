@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import aswanabidin.footballmatchschedule.features.favorite.FavoriteMatchFragment
 import aswanabidin.footballmatchschedule.features.match.last.LastMatchFragment
 import aswanabidin.footballmatchschedule.features.match.next.NextMatchFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        bottom_navigation.selectedItemId = R.id.lastMatch
 
     }
 
@@ -55,10 +57,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadFavoritesMatch(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-//            supportFragmentManager
-//                .beginTransaction()
-//                .replace(R.id.main_container, FavoriteMatchFragment(), FavoriteMatchFragment::class.java.simpleName)
-//                .commit()
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main_container, FavoriteMatchFragment(), FavoriteMatchFragment::class.java.simpleName)
+                .commit()
         }
     }
 

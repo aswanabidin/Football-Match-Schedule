@@ -61,7 +61,7 @@ android {
 
     configurations {
         cleanedAnnotations
-        compile.exclude group: 'org.jetbrains' , module:'annotations'
+        compile.exclude group: 'org.jetbrains', module: 'annotations'
     }
 
 }
@@ -85,7 +85,6 @@ dependencies {
 
     //Anko
     implementation "org.jetbrains.anko:anko:0.10.5"
-
 
     // Rest API
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
