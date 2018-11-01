@@ -1,7 +1,5 @@
 package aswanabidin.footballmatchschedule.features.favorite
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -16,7 +14,7 @@ import aswanabidin.footballmatchschedule.model.match.MatchEventModel
 import aswanabidin.footballmatchschedule.model.match.MatchEventPresenter
 import aswanabidin.footballmatchschedule.network.IRestTheSportDB
 import aswanabidin.footballmatchschedule.network.RetrofitInstance
-import aswanabidin.footballmatchschedule.utils.AppSchedule
+import aswanabidin.footballmatchschedule.utils.AppScheduler
 import aswanabidin.footballmatchschedule.utils.hide
 import aswanabidin.footballmatchschedule.utils.show
 import kotlinx.android.synthetic.main.fragment_favorite_match.*
@@ -32,7 +30,7 @@ class FavoriteMatchFragment : Fragment(), FavoriteMatchContracts.View {
         val service = RetrofitInstance.getClient().create(IRestTheSportDB::class.java)
         val request = MatchEventPresenter(service)
         val database = DatabasePresenter(context!!)
-        val appSchedule = AppSchedule()
+        val appSchedule = AppScheduler()
         mPresenter = FavoriteMatchPresenter(this, request, database, appSchedule)
         mPresenter.getFootballMatchData()
         swipeLayotFavorite.onRefresh {

@@ -2,16 +2,12 @@ package aswanabidin.footballmatchschedule.features.detail
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import aswanabidin.footballmatchschedule.R
-import aswanabidin.footballmatchschedule.R.menu
 import aswanabidin.footballmatchschedule.R.menu.item_menu
 import aswanabidin.footballmatchschedule.constants.FavoriteConstants
-import aswanabidin.footballmatchschedule.database.database
 import aswanabidin.footballmatchschedule.model.database.DatabasePresenter
 import aswanabidin.footballmatchschedule.model.match.MatchEventModel
 import aswanabidin.footballmatchschedule.model.match.MatchEventPresenter
@@ -19,13 +15,7 @@ import aswanabidin.footballmatchschedule.model.teams.TeamsModel
 import aswanabidin.footballmatchschedule.network.IRestTheSportDB
 import aswanabidin.footballmatchschedule.network.RetrofitInstance
 import com.squareup.picasso.Picasso
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.abc_tooltip.*
 import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.design_layout_snackbar_include.*
-import kotlinx.android.synthetic.main.mtrl_layout_snackbar_include.*
 import org.jetbrains.anko.toast
 
 class DetailActivity : AppCompatActivity(), DetailContracts.View {

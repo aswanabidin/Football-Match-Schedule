@@ -1,6 +1,5 @@
 package aswanabidin.footballmatchschedule.features.match.next
 
-
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -14,7 +13,7 @@ import aswanabidin.footballmatchschedule.model.match.MatchEventModel
 import aswanabidin.footballmatchschedule.model.match.MatchEventPresenter
 import aswanabidin.footballmatchschedule.network.IRestTheSportDB
 import aswanabidin.footballmatchschedule.network.RetrofitInstance
-import aswanabidin.footballmatchschedule.utils.AppSchedule
+import aswanabidin.footballmatchschedule.utils.AppScheduler
 import aswanabidin.footballmatchschedule.utils.hide
 import aswanabidin.footballmatchschedule.utils.show
 import kotlinx.android.synthetic.main.fragment_next_match.*
@@ -39,7 +38,7 @@ class NextMatchFragment : Fragment(),
         val service = RetrofitInstance.getClient().create(IRestTheSportDB::class.java)
         val request = MatchEventPresenter(service)
         val schedulerProvider =
-            AppSchedule()
+            AppScheduler()
         mPresenter = NextMatchPresenter(
             this,
             request,

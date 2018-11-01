@@ -3,7 +3,6 @@ package aswanabidin.footballmatchschedule.model.database
 import android.content.Context
 import aswanabidin.footballmatchschedule.constants.FavoriteConstants
 import aswanabidin.footballmatchschedule.database.database
-import kotlinx.coroutines.experimental.selects.select
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
